@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Police Form Report</title>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+
+            var formData = new FormData(document.getElementById("myForm"));
+
+            fetch("https://script.google.com/macros/s/AKfycbwgiWM-ijnQV7lhBmzv7ILS516w-rjnY4NnZvIUlt0R8xHSwX4kGx72H_zvuyQhZHXS/exec", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    alert("Data Submitted Successfully");
+                    document.getElementById("myForm").reset();
+                })
+                .catch(error => {
+                    alert("Submission Failed");
+                });
+        }
+
+        function updateData() {
+
+            var formData = new FormData(document.getElementById("myForm"));
+            formData.append("action", "update");
+
+            fetch("https://script.google.com/macros/s/AKfycbwgiWM-ijnQV7lhBmzv7ILS516w-rjnY4NnZvIUlt0R8xHSwX4kGx72H_zvuyQhZHXS/exec", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    alert("Data Updated Successfully");
+                    document.getElementById("myForm").reset();
+                })
+                .catch(error => {
+                    alert("Update Failed");
+                });
+        }
+
+        function displayReport() {
+
+            document.getElementById("report").innerHTML =
+                "<h3>Loading Data... Please Wait</h3>";
+
+            fetch("https://script.google.com/macros/s/AKfycbwgiWM-ijnQV7lhBmzv7ILS516w-rjnY4NnZvIUlt0R8xHSwX4kGx72H_zvuyQhZHXS/exec")
+                .then(response => response.json())
+                .then(data => {
+
+                    var output = "";
+
+                    for (var i = 0; i < data.length; i++) {
+
+                        output += "<div style='width:450px; background:#ffffff; border-radius:15px; padding:15px; margin:12px auto; box-shadow:0px 4px 12px rgba(0,0,0,0.2); text-align:left;'>";
+
+                        output += "<div style='font-size:18px; font-weight:bold; color:#003366;'>Record " + (i + 1) + "</div><hr>";
+
+                        output += "<p><b>Name :</b> " + data[i][0] + "</p>";
+                        output += "<p><b>PNO :</b> " + data[i][1] + "</p>";
+                        output += "<p><b>Posting :</b> " + data[i][2] + "</p>";
+
+                        output += "</div>";
+                    }
+
+                    document.getElementById("report").innerHTML = output;
+
+                })
+                .catch(error => {
+                    document.getElementById("report").innerHTML =
+                        "<h3>Unable to Load Data</h3>";
+                });
+
+        }
+    </script>
+
+</head>
+
+<body bgcolor="#f2f2f2">
+
+    <center>
+
+        <h2>Police Posting Form</h2>
+
+        <form id="myForm" onsubmit="submitForm(event)">
+
+            <table border="1" cellpadding="10" bgcolor="white">
+
+                <tr>
+                    <td><b>Name:</b></td>
+                    <td><input type="text" name="name" required></td>
+                </tr>
+
+                <tr>
+                    <td><b>PNO:</b></td>
+                    <td><input type="number" name="pno" max="999999999" required></td>
+                </tr>
+
+                <tr>
+                    <td><b>Posting Police Station:</b></td>
+                    <td>
+                        <select name="posting" required>
+                            <option value="">Select</option>
+                            <option>Kotwali Nagar</option>
+                            <option>Cantt</option>
+                            <option>Mahila Thana</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="Submit">
+                        <input type="button" value="Update" onclick="updateData()">
+                        <input type="reset" value="Reset">
+                        <input type="button" value="Display Report" onclick="displayReport()">
+                    </td>
+                </tr>
+
+            </table>
+
+        </form>
+
+        <br><br>
+
+        <div id="report"></div>
+
+    </center>
+
+</body>
+
+</html>
