@@ -74,7 +74,7 @@ body {
     font-size: 0.95rem;
 }
 
-.form-group input, 
+.form-group input,
 .form-group select {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -87,7 +87,7 @@ body {
     background-color: #fff;
 }
 
-.form-group input:focus, 
+.form-group input:focus,
 .form-group select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
@@ -256,8 +256,13 @@ body {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .error-message {
@@ -292,7 +297,7 @@ body {
     color: var(--text-main);
     padding: 1rem 1.5rem;
     border-radius: var(--border-radius);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
     justify-content: space-between;

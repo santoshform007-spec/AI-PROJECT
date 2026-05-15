@@ -31,13 +31,13 @@ function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `<span>${message}</span>`;
-    
+
     toastContainer.appendChild(toast);
-    
+
     // Trigger reflow to enable animation
     void toast.offsetWidth;
     toast.classList.add('show');
-    
+
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
@@ -47,7 +47,7 @@ function showToast(message, type = 'success') {
 function submitForm(actionType) {
     const form = document.getElementById("myForm");
     const formData = new FormData(form);
-    
+
     // Add specific action if it's an update
     if (actionType === "update") {
         formData.append("action", "update");
@@ -55,14 +55,14 @@ function submitForm(actionType) {
 
     const btnSubmit = document.getElementById("btnSubmit");
     const btnUpdate = document.getElementById("btnUpdate");
-    
+
     // Disable buttons during submission
     const originalSubmitText = btnSubmit.innerHTML;
     const originalUpdateText = btnUpdate.innerHTML;
-    
+
     btnSubmit.disabled = true;
     btnUpdate.disabled = true;
-    
+
     if (actionType === "submit") {
         btnSubmit.innerHTML = "Submitting...";
     } else {
@@ -73,40 +73,40 @@ function submitForm(actionType) {
         method: "POST",
         body: formData
     })
-    .then(response => response.text())
-    .then(data => {
-        if (actionType === "submit") {
-            showToast("Data Submitted Successfully", "success");
-        } else {
-            showToast("Data Updated Successfully", "success");
-        }
-        form.reset();
-        
-        // Refresh report if it's visible
-        const reportSection = document.getElementById("report-section");
-        if (!reportSection.classList.contains("hidden")) {
-            displayReport();
-        }
-    })
-    .catch(error => {
-        showToast(actionType === "submit" ? "Submission Failed" : "Update Failed", "error");
-        console.error("Error:", error);
-    })
-    .finally(() => {
-        // Re-enable buttons
-        btnSubmit.disabled = false;
-        btnUpdate.disabled = false;
-        btnSubmit.innerHTML = originalSubmitText;
-        btnUpdate.innerHTML = originalUpdateText;
-    });
+        .then(response => response.text())
+        .then(data => {
+            if (actionType === "submit") {
+                showToast("Data Submitted Successfully", "success");
+            } else {
+                showToast("Data Updated Successfully", "success");
+            }
+            form.reset();
+
+            // Refresh report if it's visible
+            const reportSection = document.getElementById("report-section");
+            if (!reportSection.classList.contains("hidden")) {
+                displayReport();
+            }
+        })
+        .catch(error => {
+            showToast(actionType === "submit" ? "Submission Failed" : "Update Failed", "error");
+            console.error("Error:", error);
+        })
+        .finally(() => {
+            // Re-enable buttons
+            btnSubmit.disabled = false;
+            btnUpdate.disabled = false;
+            btnSubmit.innerHTML = originalSubmitText;
+            btnUpdate.innerHTML = originalUpdateText;
+        });
 }
 
 function displayReport() {
     const reportSection = document.getElementById("report-section");
     const reportContainer = document.getElementById("report");
-    
+
     reportSection.classList.remove("hidden");
-    
+
     reportContainer.innerHTML = `
         <div class="loader-container">
             <div class="loader"></div>
@@ -118,7 +118,7 @@ function displayReport() {
         .then(response => response.json())
         .then(data => {
             let output = "";
-            
+
             if (!data || data.length === 0) {
                 output = `<div class="empty-message">No records found.</div>`;
             } else {
