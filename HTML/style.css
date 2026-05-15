@@ -215,19 +215,43 @@ body {
     gap: 0.5rem;
 }
 
-.icon-btn {
-    background: none;
-    border: none;
-    font-size: 1.25rem;
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    border-radius: 6px;
     cursor: pointer;
-    transition: transform 0.2s;
-    opacity: 0.7;
-    padding: 0.2rem;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
 }
 
-.icon-btn:hover {
-    transform: scale(1.1);
-    opacity: 1;
+.action-btn svg {
+    margin-top: -1px;
+}
+
+.edit-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.edit-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.delete-btn {
+    background-color: #fee2e2;
+    color: var(--danger-color);
+}
+
+.delete-btn:hover {
+    background-color: var(--danger-color);
+    color: white;
 }
 
 .report-card-body p {
