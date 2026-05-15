@@ -11,15 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
         submitForm("submit");
     });
 
-    // Update existing record
-    btnUpdate.addEventListener("click", () => {
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-        submitForm("update");
-    });
-
     // Display reports
     btnDisplay.addEventListener("click", () => {
         displayReport();
