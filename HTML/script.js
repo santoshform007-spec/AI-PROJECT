@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwgiWM-ijnQV7lhBmzv7ILS516w-rjnY4NnZvIUlt0R8xHSwX4kGx72H_zvuyQhZHXS/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWMCXCJEit1u4Z5lgfp1RW49nE1sFZ9l04IMhCgI4WPboaSYL-21QXVzRfV4RXZ0c/exec";
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("myForm");
@@ -21,13 +21,13 @@ function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `<span>${message}</span>`;
-    
+
     toastContainer.appendChild(toast);
-    
+
     // Trigger reflow to enable animation
     void toast.offsetWidth;
     toast.classList.add('show');
-    
+
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
@@ -37,12 +37,12 @@ function showToast(message, type = 'success') {
 function submitForm() {
     const form = document.getElementById("myForm");
     const formData = new FormData(form);
-    
+
     const btnSubmit = document.getElementById("btnSubmit");
-    
+
     // Disable button during submission
     const originalSubmitText = btnSubmit.innerHTML;
-    
+
     btnSubmit.disabled = true;
     btnSubmit.innerHTML = "Submitting...";
 
@@ -50,34 +50,34 @@ function submitForm() {
         method: "POST",
         body: formData
     })
-    .then(response => response.text())
-    .then(data => {
-        showToast("Data Submitted Successfully", "success");
-        form.reset();
-        
-        // Refresh report if it's visible
-        const reportSection = document.getElementById("report-section");
-        if (!reportSection.classList.contains("hidden")) {
-            displayReport();
-        }
-    })
-    .catch(error => {
-        showToast("Submission Failed", "error");
-        console.error("Error:", error);
-    })
-    .finally(() => {
-        // Re-enable button
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = originalSubmitText;
-    });
+        .then(response => response.text())
+        .then(data => {
+            showToast("Data Submitted Successfully", "success");
+            form.reset();
+
+            // Refresh report if it's visible
+            const reportSection = document.getElementById("report-section");
+            if (!reportSection.classList.contains("hidden")) {
+                displayReport();
+            }
+        })
+        .catch(error => {
+            showToast("Submission Failed", "error");
+            console.error("Error:", error);
+        })
+        .finally(() => {
+            // Re-enable button
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = originalSubmitText;
+        });
 }
 
 // Global functions for inline HTML event handlers
-window.editRecord = function(pno) {
+window.editRecord = function (pno) {
     showToast("Update Record PNO : " + pno, "info");
 };
 
-window.deleteRecord = function(pno) {
+window.deleteRecord = function (pno) {
     if (confirm("Delete Record PNO : " + pno + " ?")) {
         showToast("Deleting Record...", "info");
 
@@ -90,29 +90,29 @@ window.deleteRecord = function(pno) {
             method: "POST",
             body: formData
         })
-        .then(response => response.text())
-        .then(data => {
-            showToast("Deleted Record PNO : " + pno, "success");
-            
-            // Refresh report to show updated data
-            const reportSection = document.getElementById("report-section");
-            if (!reportSection.classList.contains("hidden")) {
-                displayReport();
-            }
-        })
-        .catch(error => {
-            showToast("Deletion Failed", "error");
-            console.error("Error:", error);
-        });
+            .then(response => response.text())
+            .then(data => {
+                showToast("Deleted Record PNO : " + pno, "success");
+
+                // Refresh report to show updated data
+                const reportSection = document.getElementById("report-section");
+                if (!reportSection.classList.contains("hidden")) {
+                    displayReport();
+                }
+            })
+            .catch(error => {
+                showToast("Deletion Failed", "error");
+                console.error("Error:", error);
+            });
     }
 };
 
 function displayReport() {
     const reportSection = document.getElementById("report-section");
     const reportContainer = document.getElementById("report");
-    
+
     reportSection.classList.remove("hidden");
-    
+
     reportContainer.innerHTML = `
         <div class="loader-container">
             <div class="loader"></div>
@@ -124,7 +124,7 @@ function displayReport() {
         .then(response => response.json())
         .then(data => {
             let output = "";
-            
+
             if (!data || data.length === 0) {
                 output = `<div class="empty-message">No records found.</div>`;
             } else {
