@@ -79,7 +79,31 @@ window.editRecord = function(pno) {
 
 window.deleteRecord = function(pno) {
     if (confirm("Delete Record PNO : " + pno + " ?")) {
-        showToast("Deleted Record PNO : " + pno, "success");
+        showToast("Deleting Record...", "info");
+
+        const formData = new FormData();
+        formData.append("action", "delete");
+        formData.append("pno", pno);
+
+        // Optional: you can disable buttons here if you want, but the toast implies progress
+        fetch(SCRIPT_URL, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            showToast("Deleted Record PNO : " + pno, "success");
+            
+            // Refresh report to show updated data
+            const reportSection = document.getElementById("report-section");
+            if (!reportSection.classList.contains("hidden")) {
+                displayReport();
+            }
+        })
+        .catch(error => {
+            showToast("Deletion Failed", "error");
+            console.error("Error:", error);
+        });
     }
 };
 
