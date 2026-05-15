@@ -2,13 +2,12 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwgiWM-ijnQV7lhBmzv7
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("myForm");
-    const btnUpdate = document.getElementById("btnUpdate");
     const btnDisplay = document.getElementById("btnDisplay");
 
     // Submit new record
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-        submitForm("submit");
+        submitForm();
     });
 
     // Display reports
@@ -22,82 +21,74 @@ function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `<span>${message}</span>`;
-
+    
     toastContainer.appendChild(toast);
-
+    
     // Trigger reflow to enable animation
     void toast.offsetWidth;
     toast.classList.add('show');
-
+    
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
 
-function submitForm(actionType) {
+function submitForm() {
     const form = document.getElementById("myForm");
     const formData = new FormData(form);
-
-    // Add specific action if it's an update
-    if (actionType === "update") {
-        formData.append("action", "update");
-    }
-
+    
     const btnSubmit = document.getElementById("btnSubmit");
-    const btnUpdate = document.getElementById("btnUpdate");
-
-    // Disable buttons during submission
+    
+    // Disable button during submission
     const originalSubmitText = btnSubmit.innerHTML;
-    const originalUpdateText = btnUpdate.innerHTML;
-
+    
     btnSubmit.disabled = true;
-    btnUpdate.disabled = true;
-
-    if (actionType === "submit") {
-        btnSubmit.innerHTML = "Submitting...";
-    } else {
-        btnUpdate.innerHTML = "Updating...";
-    }
+    btnSubmit.innerHTML = "Submitting...";
 
     fetch(SCRIPT_URL, {
         method: "POST",
         body: formData
     })
-        .then(response => response.text())
-        .then(data => {
-            if (actionType === "submit") {
-                showToast("Data Submitted Successfully", "success");
-            } else {
-                showToast("Data Updated Successfully", "success");
-            }
-            form.reset();
-
-            // Refresh report if it's visible
-            const reportSection = document.getElementById("report-section");
-            if (!reportSection.classList.contains("hidden")) {
-                displayReport();
-            }
-        })
-        .catch(error => {
-            showToast(actionType === "submit" ? "Submission Failed" : "Update Failed", "error");
-            console.error("Error:", error);
-        })
-        .finally(() => {
-            // Re-enable buttons
-            btnSubmit.disabled = false;
-            btnUpdate.disabled = false;
-            btnSubmit.innerHTML = originalSubmitText;
-            btnUpdate.innerHTML = originalUpdateText;
-        });
+    .then(response => response.text())
+    .then(data => {
+        showToast("Data Submitted Successfully", "success");
+        form.reset();
+        
+        // Refresh report if it's visible
+        const reportSection = document.getElementById("report-section");
+        if (!reportSection.classList.contains("hidden")) {
+            displayReport();
+        }
+    })
+    .catch(error => {
+        showToast("Submission Failed", "error");
+        console.error("Error:", error);
+    })
+    .finally(() => {
+        // Re-enable button
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = originalSubmitText;
+    });
 }
+
+// Global functions for inline HTML event handlers
+window.editRecord = function(pno) {
+    showToast("Update Record PNO : " + pno, "info");
+};
+
+window.deleteRecord = function(pno) {
+    if (confirm("Delete Record PNO : " + pno + " ?")) {
+        showToast("Deleted Record PNO : " + pno, "success");
+    }
+};
 
 function displayReport() {
     const reportSection = document.getElementById("report-section");
     const reportContainer = document.getElementById("report");
-
+    
     reportSection.classList.remove("hidden");
-
+    
     reportContainer.innerHTML = `
         <div class="loader-container">
             <div class="loader"></div>
@@ -109,7 +100,7 @@ function displayReport() {
         .then(response => response.json())
         .then(data => {
             let output = "";
-
+            
             if (!data || data.length === 0) {
                 output = `<div class="empty-message">No records found.</div>`;
             } else {
@@ -118,6 +109,10 @@ function displayReport() {
                         <div class="report-card">
                             <div class="report-card-header">
                                 <span>Record ${index + 1}</span>
+                                <div class="report-card-actions">
+                                    <button class="icon-btn" title="Edit" onclick="editRecord('${record[1]}')">✏️</button>
+                                    <button class="icon-btn" title="Delete" onclick="deleteRecord('${record[1]}')">🗑️</button>
+                                </div>
                             </div>
                             <div class="report-card-body">
                                 <p><strong>Name</strong>: ${record[0]}</p>

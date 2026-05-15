@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Police Form Report</title>
     <!-- Google Fonts -->
-    <link
-        href="https://script.google.com/macros/s/AKfycbwgiWM-ijnQV7lhBmzv7ILS516w-rjnY4NnZvIUlt0R8xHSwX4kGx72H_zvuyQhZHXS/exec">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div id="toast-container"></div>
 
     <div class="container">
         <header class="header">
             <h2>Police Posting Form</h2>
-            <p>Enter the details below to update or submit new postings.</p>
+            <p>Enter the details below to submit new postings.</p>
         </header>
 
         <main class="card">
@@ -47,6 +44,7 @@
 
                 <div class="button-group">
                     <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+                    <button type="reset" class="btn btn-outline" id="btnReset">Reset</button>
                     <button type="button" class="btn btn-info" id="btnDisplay">Display Report</button>
                 </div>
             </form>
@@ -65,5 +63,4 @@
     <!-- Link to external JS -->
     <script src="script.js"></script>
 </body>
-
 </html>

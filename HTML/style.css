@@ -93,7 +93,6 @@ body {
     box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
 }
 
-/* Custom Select styling */
 .select-wrapper {
     position: relative;
 }
@@ -147,16 +146,6 @@ body {
 
 .btn-primary:hover {
     background-color: var(--primary-hover);
-}
-
-.btn-secondary {
-    background-color: var(--secondary-color);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-}
-
-.btn-secondary:hover {
-    background-color: var(--secondary-hover);
 }
 
 .btn-outline {
@@ -221,6 +210,26 @@ body {
     align-items: center;
 }
 
+.report-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    opacity: 0.7;
+    padding: 0.2rem;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
 .report-card-body p {
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
@@ -256,13 +265,8 @@ body {
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .error-message {
@@ -324,7 +328,6 @@ body {
     border-left: 4px solid var(--info-color);
 }
 
-/* Make buttons full width on very small screens */
 @media (max-width: 480px) {
     .btn {
         flex: 1 1 100%;
