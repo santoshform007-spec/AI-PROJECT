@@ -28,7 +28,9 @@
 
                 <div class="form-group">
                     <label for="pno">PNO</label>
-                    <input type="number" id="pno" name="pno" max="999999999" placeholder="Enter PNO number" required>
+                    <input type="text" inputmode="numeric" pattern="\d{9}" minlength="9" maxlength="9"
+                        title="PNO must be exactly 9 digits" id="pno" name="pno" placeholder="Enter 9-digit PNO number"
+                        required>
                 </div>
 
                 <div class="form-group">
@@ -80,7 +82,8 @@
 
                 <div class="form-group">
                     <label for="editPno">PNO</label>
-                    <input type="number" id="editPno" name="pno" max="999999999" required>
+                    <input type="text" inputmode="numeric" pattern="\d{9}" minlength="9" maxlength="9"
+                        title="PNO must be exactly 9 digits" id="editPno" name="pno" required>
                 </div>
 
                 <div class="form-group">
