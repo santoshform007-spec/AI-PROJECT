@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKRvAi1uNfPOg6EHLuLQaxE3wA7LefZVVZkfqx-mlxMpNk4yG_lWGZyzd_6ovY-HL1/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcMPsjaduFkLED-HOkChFR_F1uTPtOqe4TA6s1jRMnlEDWMPnAm9P3rwZCpM_YGjbZ/exec";
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("myForm");
@@ -14,6 +14,33 @@ document.addEventListener("DOMContentLoaded", () => {
     btnDisplay.addEventListener("click", () => {
         displayReport();
     });
+    // Modal Logic
+    const editModal = document.getElementById('editModal');
+    const closeModalBtns = [document.getElementById('closeModal'), document.getElementById('btnUpdateCancel')];
+
+    closeModalBtns.forEach(btn => {
+        if (btn) {
+            btn.addEventListener("click", () => {
+                editModal.classList.add('hidden');
+            });
+        }
+    });
+
+    // Close on outside click
+    editModal.addEventListener('click', (e) => {
+        if (e.target === editModal) {
+            editModal.classList.add('hidden');
+        }
+    });
+
+    // Handle Edit Form Submit
+    const editForm = document.getElementById("editForm");
+    if (editForm) {
+        editForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            submitEditForm();
+        });
+    }
 });
 
 function showToast(message, type = 'success') {
@@ -73,8 +100,13 @@ function submitForm() {
 }
 
 // Global functions for inline HTML event handlers
-window.editRecord = function (pno) {
-    showToast("Update Record PNO : " + pno, "info");
+window.editRecord = function (name, pno, posting) {
+    document.getElementById('editOriginalPno').value = pno;
+    document.getElementById('editName').value = name;
+    document.getElementById('editPno').value = pno;
+    document.getElementById('editPosting').value = posting;
+
+    document.getElementById('editModal').classList.remove('hidden');
 };
 
 window.deleteRecord = function (pno) {
@@ -107,6 +139,42 @@ window.deleteRecord = function (pno) {
     }
 };
 
+function submitEditForm() {
+    const editForm = document.getElementById("editForm");
+    const formData = new FormData(editForm);
+    formData.append("action", "update");
+
+    const btnUpdateSubmit = document.getElementById("btnUpdateSubmit");
+    const originalText = btnUpdateSubmit.innerHTML;
+
+    btnUpdateSubmit.disabled = true;
+    btnUpdateSubmit.innerHTML = "Saving...";
+
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.text())
+        .then(data => {
+            showToast("Record Updated Successfully", "success");
+            document.getElementById('editModal').classList.add('hidden');
+
+            // Refresh report
+            const reportSection = document.getElementById("report-section");
+            if (!reportSection.classList.contains("hidden")) {
+                displayReport();
+            }
+        })
+        .catch(error => {
+            showToast("Update Failed", "error");
+            console.error("Error:", error);
+        })
+        .finally(() => {
+            btnUpdateSubmit.disabled = false;
+            btnUpdateSubmit.innerHTML = originalText;
+        });
+}
+
 function displayReport() {
     const reportSection = document.getElementById("report-section");
     const reportContainer = document.getElementById("report");
@@ -134,7 +202,7 @@ function displayReport() {
                             <div class="report-card-header">
                                 <span>Record ${index + 1}</span>
                                 <div class="report-card-actions">
-                                    <button class="action-btn edit-btn" title="Edit" onclick="editRecord('${record[1]}')">
+                                    <button class="action-btn edit-btn" title="Edit" onclick="editRecord('${record[0]}', '${record[1]}', '${record[2]}')">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                         Edit
                                     </button>
