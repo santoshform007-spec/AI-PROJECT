@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzcsNHxIdkVc0Nta4PYZlfavyg_qdMjjMBL8E6K_wuT383K9AL6yi1CG1eU5O_r4Qgh/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwgiWM-ijnQV7lhBmzv7ILS516w-rjnY4NnZvIUlt0R8xHSwX4kGx72H_zvuyQhZHXS/exec";
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("myForm");
