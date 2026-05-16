@@ -52,6 +52,15 @@ body {
     text-align: left;
 }
 
+#headerActions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.d-none {
+    display: none;
+}
+
 @media (max-width: 600px) {
     .header-content {
         flex-direction: column;
