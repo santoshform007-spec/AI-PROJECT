@@ -124,9 +124,9 @@ body {
 }
 
 .form-group select {
-    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none;
 }
 
 .button-group {
@@ -432,6 +432,7 @@ body {
     opacity: 1;
     visibility: visible;
     transition: all 0.3s ease;
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
 }
 
@@ -480,6 +481,10 @@ body {
     color: var(--danger-color);
 }
 
+.modal .button-group {
+    margin-top: 1.5rem;
+}
+
 @media (max-width: 480px) {
     .btn {
         flex: 1 1 100%;
@@ -515,4 +520,35 @@ body {
 .btn-logout:hover {
     background-color: var(--danger-color);
     color: white;
+}
+
+.login-form-actions {
+    margin-top: 2rem;
+}
+
+.btn-login {
+    width: 100%;
+    flex: 1 1 100%;
+}
+
+.login-links {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.user-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: opacity 0.2s;
+}
+
+.user-link:hover {
+    opacity: 0.8;
+}
+
+.btn-admin-login {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
 }
