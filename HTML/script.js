@@ -137,10 +137,11 @@ function submitForm() {
 }
 
 // Global functions for inline HTML event handlers
-window.editRecord = function (name, pno, posting) {
+window.editRecord = function (name, pno, mobile, posting) {
     document.getElementById('editOriginalPno').value = pno;
     document.getElementById('editName').value = name;
     document.getElementById('editPno').value = pno;
+    document.getElementById('editMobile').value = mobile;
     document.getElementById('editPosting').value = posting;
 
     document.getElementById('editModal').classList.remove('hidden');
@@ -248,7 +249,7 @@ function renderReport(data) {
     
     let filteredData = data;
     if (filterValue !== "All") {
-        filteredData = data.filter(record => record[2] === filterValue);
+        filteredData = data.filter(record => record[3] === filterValue);
     }
 
     let output = "";
@@ -263,7 +264,7 @@ function renderReport(data) {
                         <span>Record ${index + 1}</span>
                         <div class="report-card-actions">
                             ${isAdmin ? `
-                            <button class="action-btn edit-btn" title="Edit" onclick="editRecord('${record[0]}', '${record[1]}', '${record[2]}')">
+                            <button class="action-btn edit-btn" title="Edit" onclick="editRecord('${record[0]}', '${record[1]}', '${record[2]}', '${record[3]}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 Edit
                             </button>
@@ -277,7 +278,8 @@ function renderReport(data) {
                     <div class="report-card-body">
                         <p><strong>Name</strong>: ${record[0]}</p>
                         <p><strong>PNO</strong>: ${record[1]}</p>
-                        <p><strong>Posting</strong>: ${record[2]}</p>
+                        <p><strong>Mobile No</strong>: ${record[2]}</p>
+                        <p><strong>Posting</strong>: ${record[3]}</p>
                     </div>
                 </div>
             `;
