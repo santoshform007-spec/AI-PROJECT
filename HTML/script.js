@@ -1,7 +1,5 @@
-// Check Authentication First
-if (sessionStorage.getItem("isAdminLoggedIn") !== "true") {
-    window.location.href = "login.html";
-}
+// Determine Role
+const isAdmin = sessionStorage.getItem("isAdminLoggedIn") === "true";
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcMPsjaduFkLED-HOkChFR_F1uTPtOqe4TA6s1jRMnlEDWMPnAm9P3rwZCpM_YGjbZ/exec";
 let allDutyRecords = [];
@@ -20,12 +18,22 @@ document.addEventListener("DOMContentLoaded", () => {
         displayReport();
     });
 
-    // Logout logic
+    // Auth Buttons Logic
     const btnLogout = document.getElementById("btnLogout");
+    const btnAdminLogin = document.getElementById("btnAdminLogin");
+    
+    if (isAdmin) {
+        if (btnLogout) btnLogout.style.display = 'inline-flex';
+        if (btnAdminLogin) btnAdminLogin.style.display = 'none';
+    } else {
+        if (btnLogout) btnLogout.style.display = 'none';
+        if (btnAdminLogin) btnAdminLogin.style.display = 'inline-flex';
+    }
+
     if (btnLogout) {
         btnLogout.addEventListener("click", () => {
             sessionStorage.removeItem("isAdminLoggedIn");
-            window.location.href = "login.html";
+            window.location.reload();
         });
     }
 
@@ -247,6 +255,7 @@ function renderReport(data) {
                     <div class="report-card-header">
                         <span>Record ${index + 1}</span>
                         <div class="report-card-actions">
+                            ${isAdmin ? `
                             <button class="action-btn edit-btn" title="Edit" onclick="editRecord('${record[0]}', '${record[1]}', '${record[2]}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 Edit
@@ -255,6 +264,7 @@ function renderReport(data) {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                 Delete
                             </button>
+                            ` : ''}
                         </div>
                     </div>
                     <div class="report-card-body">
