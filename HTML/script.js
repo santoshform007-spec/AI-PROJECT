@@ -1,5 +1,11 @@
 // Determine Role
 const isAdmin = sessionStorage.getItem("isAdminLoggedIn") === "true";
+const isUser = sessionStorage.getItem("isUserLoggedIn") === "true";
+
+// Always enforce login screen if no role is selected
+if (!isAdmin && !isUser) {
+    window.location.href = "login.html";
+}
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcMPsjaduFkLED-HOkChFR_F1uTPtOqe4TA6s1jRMnlEDWMPnAm9P3rwZCpM_YGjbZ/exec";
 let allDutyRecords = [];
@@ -33,7 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnLogout) {
         btnLogout.addEventListener("click", () => {
             sessionStorage.removeItem("isAdminLoggedIn");
-            window.location.reload();
+            sessionStorage.removeItem("isUserLoggedIn");
+            window.location.href = "login.html";
         });
     }
 
