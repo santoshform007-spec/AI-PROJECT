@@ -6,25 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const loginForm = document.getElementById("loginForm");
-    
+
     if (loginForm) {
         loginForm.addEventListener("submit", (event) => {
             event.preventDefault();
-            
+
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
             const btnLogin = document.getElementById("btnLogin");
-            
+
             const originalText = btnLogin.innerHTML;
             btnLogin.disabled = true;
             btnLogin.innerHTML = "Authenticating...";
 
             // Mock Authentication Delay
             setTimeout(() => {
-                if (username === "admin" && password === "admin123") {
+                if (username === "admin" && password === "Santosh!0077#") {
                     showToast("Login Successful! Redirecting...", "success");
                     sessionStorage.setItem("isAdminLoggedIn", "true");
-                    
+
                     setTimeout(() => {
                         window.location.href = "index.html";
                     }, 1000);
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function showToast(message, type = 'success') {
     const toastContainer = document.getElementById('toast-container');
     if (!toastContainer) return;
-    
+
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `<span>${message}</span>`;
