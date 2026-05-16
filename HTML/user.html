@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duty Management System - User Panel</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="toast-container"></div>
+
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h2>Police Duty Management System</h2>
+                <a href="login.html" class="btn btn-outline" style="text-decoration: none; padding: 0.5rem 1rem;">Admin Login</a>
+            </div>
+        </header>
+
+        <main class="card">
+            <form id="myForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pno">PNO</label>
+                    <input type="text" inputmode="numeric" pattern="\d{9}" minlength="9" maxlength="9"
+                        title="PNO must be exactly 9 digits" id="pno" name="pno" placeholder="Enter 9-digit PNO number"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="posting">Police Station</label>
+                    <div class="select-wrapper">
+                        <select id="posting" name="posting" required>
+                            <option value="" disabled selected>Select Police Station</option>
+                            <option value="Kotwali Nagar">Kotwali Nagar</option>
+                            <option value="Cantt">Cantt</option>
+                            <option value="Mahila Thana">Mahila Thana</option>
+                            <option value="Kotwali Ayodhya">Kotwali Ayodhya</option>
+                            <option value="Kotwali Rudauli">Kotwali Rudauli</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+                    <button type="reset" class="btn btn-outline" id="btnReset">Reset</button>
+                    <button type="button" class="btn btn-info" id="btnDisplay">Display Report</button>
+                </div>
+            </form>
+        </main>
+
+        <section id="report-section" class="report-section hidden">
+            <div class="report-header">
+                <h3>Current Duty Information</h3>
+                <div class="filter-group">
+                    <label for="filterPosting">Filter by Station:</label>
+                    <div class="select-wrapper">
+                        <select id="filterPosting">
+                            <option value="All">All Stations</option>
+                            <option value="Kotwali Nagar">Kotwali Nagar</option>
+                            <option value="Cantt">Cantt</option>
+                            <option value="Mahila Thana">Mahila Thana</option>
+                            <option value="Kotwali Ayodhya">Kotwali Ayodhya</option>
+                            <option value="Kotwali Rudauli">Kotwali Rudauli</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div id="report" class="report-container">
+                <!-- Data will be populated here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Link to external JS -->
+    <script src="user.js"></script>
+</body>
+
+</html>
