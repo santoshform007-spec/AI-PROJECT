@@ -7,7 +7,7 @@ if (!isAdmin && !isUser) {
     window.location.href = "login.html";
 }
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcMPsjaduFkLED-HOkChFR_F1uTPtOqe4TA6s1jRMnlEDWMPnAm9P3rwZCpM_YGjbZ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwMNLFBfr7_FL_fKmYropbaxOz4AyDUx7swWAff02DITjwGjvj07fP9GzAPq496wKO/exec";
 let allDutyRecords = [];
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("myForm");
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Auth Buttons Logic
     const btnLogout = document.getElementById("btnLogout");
     const btnAdminLogin = document.getElementById("btnAdminLogin");
-    
+
     if (isAdmin) {
         if (btnLogout) btnLogout.style.display = 'inline-flex';
         if (btnAdminLogin) btnAdminLogin.style.display = 'none';
@@ -246,7 +246,7 @@ function displayReport() {
 function renderReport(data) {
     const reportContainer = document.getElementById("report");
     const filterValue = document.getElementById("filterPosting") ? document.getElementById("filterPosting").value : "All";
-    
+
     let filteredData = data;
     if (filterValue !== "All") {
         filteredData = data.filter(record => record[3] === filterValue);
