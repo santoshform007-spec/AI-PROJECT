@@ -1,5 +1,10 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcMPsjaduFkLED-HOkChFR_F1uTPtOqe4TA6s1jRMnlEDWMPnAm9P3rwZCpM_YGjbZ/exec";
+// Check Authentication First
+if (sessionStorage.getItem("isAdminLoggedIn") !== "true") {
+    window.location.href = "login.html";
+}
 
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcMPsjaduFkLED-HOkChFR_F1uTPtOqe4TA6s1jRMnlEDWMPnAm9P3rwZCpM_YGjbZ/exec";
+let allDutyRecords = [];
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("myForm");
     const btnDisplay = document.getElementById("btnDisplay");
@@ -14,6 +19,23 @@ document.addEventListener("DOMContentLoaded", () => {
     btnDisplay.addEventListener("click", () => {
         displayReport();
     });
+
+    // Logout logic
+    const btnLogout = document.getElementById("btnLogout");
+    if (btnLogout) {
+        btnLogout.addEventListener("click", () => {
+            sessionStorage.removeItem("isAdminLoggedIn");
+            window.location.href = "login.html";
+        });
+    }
+
+    // Filter logic
+    const filterPosting = document.getElementById("filterPosting");
+    if (filterPosting) {
+        filterPosting.addEventListener("change", () => {
+            renderReport(allDutyRecords);
+        });
+    }
     // Modal Logic
     const editModal = document.getElementById('editModal');
     const closeModalBtns = [document.getElementById('closeModal'), document.getElementById('btnUpdateCancel')];
@@ -191,38 +213,8 @@ function displayReport() {
     fetch(SCRIPT_URL)
         .then(response => response.json())
         .then(data => {
-            let output = "";
-
-            if (!data || data.length === 0) {
-                output = `<div class="empty-message">No records found.</div>`;
-            } else {
-                data.forEach((record, index) => {
-                    output += `
-                        <div class="report-card">
-                            <div class="report-card-header">
-                                <span>Record ${index + 1}</span>
-                                <div class="report-card-actions">
-                                    <button class="action-btn edit-btn" title="Edit" onclick="editRecord('${record[0]}', '${record[1]}', '${record[2]}')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                        Edit
-                                    </button>
-                                    <button class="action-btn delete-btn" title="Delete" onclick="deleteRecord('${record[1]}')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="report-card-body">
-                                <p><strong>Name</strong>: ${record[0]}</p>
-                                <p><strong>PNO</strong>: ${record[1]}</p>
-                                <p><strong>Posting</strong>: ${record[2]}</p>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-
-            reportContainer.innerHTML = output;
+            allDutyRecords = data || [];
+            renderReport(allDutyRecords);
         })
         .catch(error => {
             reportContainer.innerHTML = `
@@ -233,4 +225,47 @@ function displayReport() {
             `;
             console.error("Error fetching data:", error);
         });
+}
+
+function renderReport(data) {
+    const reportContainer = document.getElementById("report");
+    const filterValue = document.getElementById("filterPosting") ? document.getElementById("filterPosting").value : "All";
+    
+    let filteredData = data;
+    if (filterValue !== "All") {
+        filteredData = data.filter(record => record[2] === filterValue);
+    }
+
+    let output = "";
+
+    if (!filteredData || filteredData.length === 0) {
+        output = `<div class="empty-message">No records found.</div>`;
+    } else {
+        filteredData.forEach((record, index) => {
+            output += `
+                <div class="report-card">
+                    <div class="report-card-header">
+                        <span>Record ${index + 1}</span>
+                        <div class="report-card-actions">
+                            <button class="action-btn edit-btn" title="Edit" onclick="editRecord('${record[0]}', '${record[1]}', '${record[2]}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                Edit
+                            </button>
+                            <button class="action-btn delete-btn" title="Delete" onclick="deleteRecord('${record[1]}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <div class="report-card-body">
+                        <p><strong>Name</strong>: ${record[0]}</p>
+                        <p><strong>PNO</strong>: ${record[1]}</p>
+                        <p><strong>Posting</strong>: ${record[2]}</p>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    reportContainer.innerHTML = output;
 }

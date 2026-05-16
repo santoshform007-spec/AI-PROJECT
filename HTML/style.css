@@ -40,8 +40,23 @@ body {
 }
 
 .header {
-    text-align: center;
     margin-bottom: 2rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 .header h2 {
@@ -178,12 +193,55 @@ body {
     opacity: 0;
 }
 
-.report-header h3 {
-    font-size: 1.5rem;
-    color: var(--text-main);
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
     border-bottom: 2px solid var(--border-color);
     padding-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.report-header h3 {
+    font-size: 1.5rem;
+    color: var(--text-main);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.filter-group label {
+    font-weight: 500;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.filter-group .select-wrapper {
+    width: 200px;
+}
+
+.filter-group select {
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+}
+
+@media (max-width: 600px) {
+    .report-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-group .select-wrapper {
+        width: 100%;
+    }
 }
 
 .report-card {
@@ -424,4 +482,35 @@ body {
     .btn {
         flex: 1 1 100%;
     }
+}
+
+/* Login Page Styles */
+.login-body {
+    background: linear-gradient(135deg, #f4f7f6 0%, #e0e8e5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.login-container {
+    max-width: 450px;
+}
+
+.login-card {
+    padding: 3rem 2.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.btn-logout {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+    flex: 0 1 auto;
+}
+
+.btn-logout:hover {
+    background-color: var(--danger-color);
+    color: white;
 }

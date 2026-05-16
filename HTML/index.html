@@ -16,7 +16,10 @@
 
     <div class="container">
         <header class="header">
-            <h2>Police Duty Management System</h2>
+            <div class="header-content">
+                <h2>Police Duty Management System</h2>
+                <button type="button" class="btn btn-outline btn-logout" id="btnLogout">Logout</button>
+            </div>
         </header>
 
         <main class="card">
@@ -58,6 +61,19 @@
         <section id="report-section" class="report-section hidden">
             <div class="report-header">
                 <h3>Current Duty Information</h3>
+                <div class="filter-group">
+                    <label for="filterPosting">Filter by Station:</label>
+                    <div class="select-wrapper">
+                        <select id="filterPosting">
+                            <option value="All">All Stations</option>
+                            <option value="Kotwali Nagar">Kotwali Nagar</option>
+                            <option value="Cantt">Cantt</option>
+                            <option value="Mahila Thana">Mahila Thana</option>
+                            <option value="Kotwali Ayodhya">Kotwali Ayodhya</option>
+                            <option value="Kotwali Rudauli">Kotwali Rudauli</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div id="report" class="report-container">
                 <!-- Data will be populated here -->

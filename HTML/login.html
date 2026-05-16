@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Duty Management System</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-body">
+    <div id="toast-container"></div>
+
+    <div class="container login-container">
+        <header class="header">
+            <h2>Admin Login</h2>
+            <p>Police Duty Management System</p>
+        </header>
+
+        <main class="card login-card">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+
+                <div class="button-group" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" id="btnLogin" style="width: 100%; flex: 1 1 100%;">Login</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Link to external JS -->
+    <script src="login.js"></script>
+</body>
+
+</html>
