@@ -511,6 +511,7 @@ body {
     font-weight: 800;
     background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
     letter-spacing: -0.5px;
@@ -604,4 +605,8 @@ body {
 .btn-admin-login:active {
     transform: translateY(1px);
     box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+}
+
+.btn-admin-login svg {
+    margin-right: 6px;
 }
