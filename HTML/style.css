@@ -930,7 +930,7 @@ body {
 
 .developer-credit {
     margin-top: 1.5rem;
-    font-size: 0.5rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
     font-weight: 600;
     text-align: right;
@@ -1193,7 +1193,7 @@ body {
 }
 
 .login-links .developer-credit {
-    font-size: 0.65rem !important;
+    font-size: 0.5rem !important;
     color: #0b4c96 !important;
     letter-spacing: 0.5px;
     margin-top: 0.5rem;
