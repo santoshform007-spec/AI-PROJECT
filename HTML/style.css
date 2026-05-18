@@ -938,3 +938,145 @@ body {
 .d-none {
     display: none !important;
 }
+
+/* ==========================================================================
+   Ultra-Premium Dark Glassmorphic Login Styles
+   ========================================================================== */
+
+.login-body {
+    background: radial-gradient(at 0% 0%, #1e1b4b 0px, transparent 50%),
+                radial-gradient(at 100% 0%, #311042 0px, transparent 50%),
+                radial-gradient(at 50% 100%, #0c4c96 0px, transparent 50%),
+                #0f172a;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+}
+
+.login-container {
+    max-width: 420px;
+    width: 100%;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.login-header p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.login-card {
+    background: rgba(15, 23, 42, 0.65) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3) !important;
+    width: 100%;
+    border-radius: 16px !important;
+    padding: 2.5rem 2rem !important;
+    margin-bottom: 0 !important;
+}
+
+.login-card .form-group label {
+    color: #cbd5e1 !important; /* Soft gray for dark background label */
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.login-card .form-group input {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-radius: 6px !important;
+    padding: 0.8rem 1rem !important;
+    font-size: 0.95rem !important;
+    transition: var(--transition);
+    box-shadow: none !important;
+}
+
+.login-card .form-group input::placeholder {
+    color: #475569 !important;
+}
+
+.login-card .form-group input:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--info-color) !important;
+    box-shadow: 0 0 0 3px rgba(27, 115, 232, 0.25) !important;
+}
+
+.btn-login {
+    width: 100%;
+    background: linear-gradient(135deg, #1b73e8 0%, #0b4c96 100%) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    color: #ffffff !important;
+    padding: 0.8rem !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    cursor: pointer;
+    transition: var(--transition) !important;
+    box-shadow: 0 4px 12px rgba(27, 115, 232, 0.25) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-login:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(27, 115, 232, 0.4) !important;
+    background: linear-gradient(135deg, #155cb0 0%, #083b75 100%) !important;
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.login-links {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.user-link {
+    color: #93c5fd !important;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+}
+
+.user-link:hover {
+    color: #ffffff !important;
+    transform: translateX(3px);
+}
+
+.login-links .developer-credit {
+    font-size: 0.65rem !important;
+    color: #64748b !important;
+    letter-spacing: 0.5px;
+    margin-top: 0.75rem;
+}
