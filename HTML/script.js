@@ -302,6 +302,17 @@ function displayReport() {
         });
 }
 
+// Get custom sort order rank for designations (Comp Op -> HC -> LHC -> C -> LC)
+function getDesignationRank(designation) {
+    const d = String(designation || '').trim();
+    if (d.toLowerCase().includes('com') && d.toLowerCase().includes('op')) return 1;
+    if (d === 'HC') return 2;
+    if (d === 'LHC') return 3;
+    if (d === 'C') return 4;
+    if (d === 'LC') return 5;
+    return 99;
+}
+
 function renderReport(data) {
     const reportContainer = document.getElementById("report");
     const filterValue = document.getElementById("filterPosting") ? document.getElementById("filterPosting").value : "All";
@@ -310,6 +321,9 @@ function renderReport(data) {
     if (filterValue !== "All") {
         filteredData = data.filter(record => record[4] === filterValue);
     }
+
+    // Sort by custom Designation Order
+    filteredData.sort((a, b) => getDesignationRank(a[0]) - getDesignationRank(b[0]));
 
     let output = "";
 
@@ -375,6 +389,10 @@ function generatePdfReport() {
             doc.setFontSize(14);
             doc.text(`Station: ${station}`, 14, y);
             y += 8;
+            
+            // Sort records in PDF station wise by Designation Order
+            records.sort((a, b) => getDesignationRank(a[0]) - getDesignationRank(b[0]));
+
             // Prepare table body
             const body = records.map(r => [r[0], r[1], r[2], r[3]]);
             // Add autoTable
