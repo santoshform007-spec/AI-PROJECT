@@ -7,7 +7,7 @@ if (!isAdmin && !isUser) {
     window.location.href = "login.html";
 }
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1k442SIhJSH3z1oeW0k2cTPBk7zK6wsvhkciJy6e2MHpF1AYY9qHKcmc6tHj9kWeM/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQKPZTMTG3AIY3ewpDUbCaJwm5FH7Fd14SlT0NXNcD_e0KipjQQx6I_DeOovbUmIpJ/exec";
 let allDutyRecords = [];
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("myForm");
