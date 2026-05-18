@@ -369,18 +369,24 @@ function generatePdfReport() {
             grouped[station].push(rec);
         });
         Object.entries(grouped).forEach(([station, records]) => {
-            if (y > 270) { doc.addPage(); y = 20; }
+            if (y > 260) { doc.addPage(); y = 20; }
             doc.setFontSize(14);
             doc.text(`Station: ${station}`, 14, y);
             y += 8;
-            doc.setFontSize(12);
-            records.forEach((rec, idx) => {
-                const line = `${idx + 1}. Name: ${rec[0]}, PNO: ${rec[1]}, Mobile: ${rec[2]}`;
-                if (y > 280) { doc.addPage(); y = 20; }
-                doc.text(line, 20, y);
-                y += 6;
+            // Prepare table body
+            const body = records.map(r => [r[0], r[1], r[2]]);
+            // Add autoTable
+            doc.autoTable({
+                startY: y,
+                head: [['Name', 'PNO', 'Mobile']],
+                body: body,
+                theme: 'grid',
+                margin: { left: 14, right: 14 },
+                styles: { fontSize: 10 },
+                headStyles: { fillColor: [41, 128, 185] }
             });
-            y += 4;
+            // Update y position after table
+            y = doc.lastAutoTable.finalY + 10;
         });
         doc.save('Police_Station_Wise_Report.pdf');
         showToast('PDF report generated', 'success');
