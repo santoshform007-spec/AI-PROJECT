@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duty Management System</title>
+    <title>Ayodhya Police Duty Management System</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="style.css">
     <!-- jsPDF Library -->
@@ -18,173 +18,251 @@
 <body>
     <div id="toast-container"></div>
 
-    <div class="container">
-        <header class="header">
-            <div class="header-content">
-                <h2>Police Duty Management System</h2>
-                <div id="headerActions">
-                    <button type="button" class="btn-menu" id="btnSidebarToggle" title="Toggle Dashboard Menu">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
-                    </button>
-                    <button type="button" class="btn btn-outline btn-logout d-none" id="btnLogout">Logout</button>
-                    <a href="login.html" class="btn btn-admin-login d-none" id="btnAdminLogin">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        </svg>
-                        Admin Login
-                    </a>
+    <!-- Symmetrical Left-Floating Menu Toggle Button -->
+    <button type="button" class="btn-menu" id="btnSidebarToggle" title="Toggle Dashboard Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <!-- Symmetrical Right-Floating Logout Button -->
+    <button type="button" class="btn btn-outline btn-logout d-none" id="btnLogout">Logout</button>
+
+    <!-- Left Sidebar Overlay -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- Complete CEIR-Style Left Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">👮</div>
+            <div class="logo-text">
+                <h2>Ayodhya Police</h2>
+                <p>Duty Portal</p>
+            </div>
+        </div>
+        <nav class="sidebar-menu">
+            <a class="sidebar-item active" id="menuStatsBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                System Statistics
+            </a>
+            <a class="sidebar-item" id="menuFormBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                Add New Duty
+            </a>
+            <a class="sidebar-item" id="menuReportBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="15" y2="17"></line></svg>
+                View Duty Directory
+            </a>
+            <a class="sidebar-item d-none" id="menuPdfBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Export Station PDF
+            </a>
+            <a class="sidebar-item" id="menuLogoutBtn" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); color: #fca5a5; background: rgba(239, 68, 68, 0.08);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Workspace Container -->
+    <div class="app-layout">
+        <!-- Main Panel Header -->
+        <header class="top-header">
+            <div class="header-left">
+                <div class="breadcrumbs">
+                    <span class="breadcrumb-item">Home</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item active" id="currentBreadcrumb">System Statistics</span>
                 </div>
+            </div>
+            <div class="header-right">
+                <span class="welcome-user" id="welcomeUserText">Welcome, Nodal_Ayodhya_UP</span>
+                <a href="login.html" class="btn btn-admin-login d-none" id="btnAdminLogin">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Admin Login
+                </a>
             </div>
         </header>
 
-        <!-- Stats Dashboard -->
-        <section id="dashboard-stats" class="dashboard-stats d-none">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon icon-personnel">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
+        <!-- Main Body Content Area -->
+        <main class="main-content">
+            <!-- Stats Dashboard Panel -->
+            <section id="dashboard-stats" class="dashboard-stats d-none">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-personnel">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Total Personnel</span>
+                            <h4 class="stat-value" id="statTotalPersonnel">0</h4>
+                        </div>
                     </div>
-                    <div class="stat-info">
-                        <span class="stat-label">Total Personnel</span>
-                        <h4 class="stat-value" id="statTotalPersonnel">0</h4>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-stations">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Active Stations</span>
+                            <h4 class="stat-value" id="statActiveStations">0</h4>
+                        </div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon icon-stations">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <span class="stat-label">Active Stations</span>
-                        <h4 class="stat-value" id="statActiveStations">0</h4>
-                    </div>
+            </section>
+
+            <!-- High-Fidelity CEIR System Statistics Card -->
+            <div class="ceir-card">
+                <div class="ceir-card-header">
+                    <h2>📊 CEIR System Statistics</h2>
                 </div>
+                <form id="myForm" class="ceir-form">
+                    <div class="ceir-row">
+                        <span class="ceir-label">Location</span>
+                        <div class="ceir-value static-text">Uttar Pradesh</div>
+                    </div>
+
+                    <div class="ceir-row">
+                        <label class="ceir-label" for="designation">Select Designation</label>
+                        <div class="ceir-value">
+                            <div class="ceir-select-wrapper">
+                                <select id="designation" name="designation" required>
+                                    <option value="" disabled selected>Select Designation</option>
+                                    <option value="Com Op">Com Op</option>
+                                    <option value="HC">HC</option>
+                                    <option value="LHC">LHC</option>
+                                    <option value="C">C</option>
+                                    <option value="LC">LC</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ceir-row">
+                        <label class="ceir-label" for="name">Personnel Name</label>
+                        <div class="ceir-value">
+                            <input type="text" id="name" name="name" placeholder="Enter full name" required>
+                        </div>
+                    </div>
+
+                    <div class="ceir-row">
+                        <label class="ceir-label" for="pno">Select PNO (District ID)</label>
+                        <div class="ceir-value">
+                            <input type="text" inputmode="numeric" pattern="\d{9}" minlength="9" maxlength="9"
+                                title="PNO must be exactly 9 digits" id="pno" name="pno" placeholder="AYODHYA 9-digit PNO number"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="ceir-row">
+                        <label class="ceir-label" for="mobile">Mobile Number</label>
+                        <div class="ceir-value">
+                            <input type="text" inputmode="numeric" pattern="\d{10}" minlength="10" maxlength="10"
+                                title="Mobile No must be exactly 10 digits" id="mobile" name="mobile"
+                                placeholder="Enter 10-digit Mobile No" required>
+                        </div>
+                    </div>
+
+                    <div class="ceir-row">
+                        <label class="ceir-label" for="posting">Select Station</label>
+                        <div class="ceir-value">
+                            <div class="ceir-select-wrapper">
+                                <select id="posting" name="posting" required>
+                                    <option value="" disabled selected>All</option>
+                                    <option value="Kotwali Nagar">Kotwali Nagar</option>
+                                    <option value="Cantt">Cantt</option>
+                                    <option value="Mahila Thana">Mahila Thana</option>
+                                    <option value="Kotwali Ayodhya">Kotwali Ayodhya</option>
+                                    <option value="Ramjanm Bhoomi">Ramjanm Bhoomi</option>
+                                    <option value="Purakalandar">Purakalandar</option>
+                                    <option value="Kotwali Bikapur">Kotwali Bikapur</option>
+                                    <option value="Haiderganj">Haiderganj</option>
+                                    <option value="Tarun">Tarun</option>
+                                    <option value="Raunahi">Raunahi</option>
+                                    <option value="Mahrajganj">Mahrajganj</option>
+                                    <option value="Gosaiganj">Gosaiganj</option>
+                                    <option value="Kotwali Rudauli">Kotwali Rudauli</option>
+                                    <option value="Mawai">Mawai</option>
+                                    <option value="Patranga">Patranga</option>
+                                    <option value="Baba Bazar">Baba Bazar</option>
+                                    <option value="Inayat Nagar">Inayat Nagar</option>
+                                    <option value="Kumarganj">Kumarganj</option>
+                                    <option value="Khandasa">Khandasa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ceir-actions">
+                        <button type="submit" class="btn-ceir-submit" id="btnSubmit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                                style="margin-right: 6px;">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                            Submit
+                        </button>
+                        <button type="reset" class="btn-ceir-reset" id="btnReset">Reset</button>
+                        <button type="button" class="btn-ceir-submit d-none" id="btnGeneratePdf" style="background-color: var(--info-color);">Generate PDF Report</button>
+                        <button type="button" class="btn-ceir-submit" id="btnDisplay" style="background-color: var(--primary-color);">Display Report</button>
+                    </div>
+                </form>
             </div>
-        </section>
 
-        <main class="card">
-            <form id="myForm">
-                <div class="form-group">
-                    <label for="designation">Designation</label>
-                    <div class="select-wrapper">
-                        <select id="designation" name="designation" required>
-                            <option value="" disabled selected>Select Designation</option>
-                            <option value="Com Op">Com Op</option>
-                            <option value="HC">HC</option>
-                            <option value="LHC">LHC</option>
-                            <option value="C">C</option>
-                            <option value="LC">LC</option>
-                        </select>
+            <!-- Report Directory Section -->
+            <section id="report-section" class="report-section hidden">
+                <div class="report-header">
+                    <h3>Current Duty Information Directory</h3>
+                    <div class="filter-group">
+                        <label for="filterPosting">Filter by Station:</label>
+                        <div class="select-wrapper">
+                            <select id="filterPosting">
+                                <option value="All">All Police Stations</option>
+                                <option value="Kotwali Nagar">Kotwali Nagar</option>
+                                <option value="Cantt">Cantt</option>
+                                <option value="Mahila Thana">Mahila Thana</option>
+                                <option value="Kotwali Ayodhya">Kotwali Ayodhya</option>
+                                <option value="Ramjanm Bhoomi">Ramjanm Bhoomi</option>
+                                <option value="Purakalandar">Purakalandar</option>
+                                <option value="Kotwali Bikapur">Kotwali Bikapur</option>
+                                <option value="Haiderganj">Haiderganj</option>
+                                <option value="Tarun">Tarun</option>
+                                <option value="Raunahi">Raunahi</option>
+                                <option value="Mahrajganj">Mahrajganj</option>
+                                <option value="Gosaiganj">Gosaiganj</option>
+                                <option value="Kotwali Rudauli">Kotwali Rudauli</option>
+                                <option value="Mawai">Mawai</option>
+                                <option value="Patranga">Patranga</option>
+                                <option value="Baba Bazar">Baba Bazar</option>
+                                <option value="Inayat Nagar">Inayat Nagar</option>
+                                <option value="Kumarganj">Kumarganj</option>
+                                <option value="Khandasa">Khandasa</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter full name" required>
+                <div id="report" class="report-container">
+                    <!-- Data will be populated here -->
                 </div>
-
-                <div class="form-group">
-                    <label for="pno">PNO</label>
-                    <input type="text" inputmode="numeric" pattern="\d{9}" minlength="9" maxlength="9"
-                        title="PNO must be exactly 9 digits" id="pno" name="pno" placeholder="Enter 9-digit PNO number"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <label for="mobile">MOBILE NO</label>
-                    <input type="text" inputmode="numeric" pattern="\d{10}" minlength="10" maxlength="10"
-                        title="Mobile No must be exactly 10 digits" id="mobile" name="mobile"
-                        placeholder="Enter 10-digit Mobile No" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="posting">Police Station</label>
-                    <div class="select-wrapper">
-                        <select id="posting" name="posting" required>
-                            <option value="" disabled selected>Select Police Station</option>
-                            <option value="Kotwali Nagar">Kotwali Nagar</option>
-                            <option value="Cantt">Cantt</option>
-                            <option value="Mahila Thana">Mahila Thana</option>
-                            <option value="Kotwali Ayodhya">Kotwali Ayodhya</option>
-                            <option value="Ramjanm Bhoomi">Ramjanm Bhoomi</option>
-                            <option value="Purakalandar">Purakalandar</option>
-                            <option value="Kotwali Bikapur">Kotwali Bikapur</option>
-                            <option value="Haiderganj">Haiderganj</option>
-                            <option value="Tarun">Tarun</option>
-                            <option value="Raunahi">Raunahi</option>
-                            <option value="Mahrajganj">Mahrajganj</option>
-                            <option value="Gosaiganj">Gosaiganj</option>
-                            <option value="Kotwali Rudauli">Kotwali Rudauli</option>
-                            <option value="Mawai">Mawai</option>
-                            <option value="Patranga">Patranga</option>
-                            <option value="Baba Bazar">Baba Bazar</option>
-                            <option value="Inayat Nagar">Inayat Nagar</option>
-                            <option value="Kumarganj">Kumarganj</option>
-                            <option value="Khandasa">Khandasa</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
-                    <button type="reset" class="btn btn-primary" id="btnReset">Reset</button>
-                    <button type="button" class="btn btn-primary d-none" id="btnGeneratePdf">Generate PDF Report</button>
-                    <button type="button" class="btn btn-primary" id="btnDisplay">Display Report</button>
-                </div>
-            </form>
+            </section>
         </main>
-
-        <section id="report-section" class="report-section hidden">
-            <div class="report-header">
-                <h3>Current Duty Information</h3>
-                <div class="filter-group">
-                    <label for="filterPosting">Filter by Station:</label>
-                    <div class="select-wrapper">
-                        <select id="filterPosting">
-                            <option value="All">All Police Stations</option>
-                            <option value="Kotwali Nagar">Kotwali Nagar</option>
-                            <option value="Cantt">Cantt</option>
-                            <option value="Mahila Thana">Mahila Thana</option>
-                            <option value="Kotwali Ayodhya">Kotwali Ayodhya</option>
-                            <option value="Ramjanm Bhoomi">Ramjanm Bhoomi</option>
-                            <option value="Purakalandar">Purakalandar</option>
-                            <option value="Kotwali Bikapur">Kotwali Bikapur</option>
-                            <option value="Haiderganj">Haiderganj</option>
-                            <option value="Tarun">Tarun</option>
-                            <option value="Raunahi">Raunahi</option>
-                            <option value="Mahrajganj">Mahrajganj</option>
-                            <option value="Gosaiganj">Gosaiganj</option>
-                            <option value="Kotwali Rudauli">Kotwali Rudauli</option>
-                            <option value="Mawai">Mawai</option>
-                            <option value="Patranga">Patranga</option>
-                            <option value="Baba Bazar">Baba Bazar</option>
-                            <option value="Inayat Nagar">Inayat Nagar</option>
-                            <option value="Kumarganj">Kumarganj</option>
-                            <option value="Khandasa">Khandasa</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div id="report" class="report-container">
-                <!-- Data will be populated here -->
-            </div>
-        </section>
     </div>
 
     <!-- Edit Modal -->
@@ -263,37 +341,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Right Sidebar Menu -->
-    <div id="sidebarOverlay" class="sidebar-overlay"></div>
-    <aside id="sidebar" class="sidebar">
-        <header class="sidebar-header">
-            <h3>Portal Menu</h3>
-            <button class="close-btn" id="closeSidebar">&times;</button>
-        </header>
-        <nav class="sidebar-menu">
-            <a class="sidebar-item d-none" id="menuStatsBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
-                Dashboard Stats
-            </a>
-            <a class="sidebar-item" id="menuFormBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
-                Add New Duty
-            </a>
-            <a class="sidebar-item" id="menuReportBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                View Duty Directory
-            </a>
-            <a class="sidebar-item d-none" id="menuPdfBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Download PDF
-            </a>
-            <a class="sidebar-item" id="menuLogoutBtn" style="margin-top: auto; border-top: 1px solid var(--border-color); color: var(--danger-color); background: rgba(239, 68, 68, 0.05);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                Logout
-            </a>
-        </nav>
-    </aside>
 
     <!-- Link to external JS -->
     <script src="script.js"></script>
