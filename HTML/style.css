@@ -820,18 +820,18 @@ body {
     line-height: 1.2;
 }
 
-/* Sliding Right Sidebar */
+/* Sliding Left Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
-    right: -320px; /* Hidden by default */
+    left: -320px; /* Hidden by default */
     width: 300px;
     height: 100%;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border-left: 1.5px solid rgba(255, 255, 255, 0.5);
-    box-shadow: -15px 0 35px rgba(15, 23, 42, 0.12);
+    border-right: 1.5px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 15px 0 35px rgba(15, 23, 42, 0.12);
     z-index: 2000;
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     padding: 2.5rem 2rem;
@@ -840,7 +840,7 @@ body {
 }
 
 .sidebar.open {
-    right: 0;
+    left: 0;
 }
 
 .sidebar-header {
@@ -887,7 +887,7 @@ body {
     background: var(--primary-light);
     color: var(--primary-color);
     border-color: rgba(79, 70, 229, 0.15);
-    transform: translateX(-4px);
+    transform: translateX(4px);
 }
 
 .sidebar-overlay {
