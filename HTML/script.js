@@ -387,9 +387,9 @@ function generatePdfReport() {
         Object.entries(grouped).forEach(([station, records]) => {
             if (y > 260) { doc.addPage(); y = 20; }
             doc.setFontSize(14);
-            doc.text(`Station: ${station}`, 14, y);
+            doc.text(`Police Station: ${station}`, 14, y);
             y += 8;
-            
+
             // Sort records in PDF station wise by Designation Order
             records.sort((a, b) => getDesignationRank(a[0]) - getDesignationRank(b[0]));
 
