@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Mock Authentication Delay
             setTimeout(() => {
-                if (username === "admin" && password === "Santosh!0077#") {
+                if (username === "admin" && password === "$antosh!0077#") {
                     showToast("Login Successful! Redirecting...", "success");
                     sessionStorage.setItem("isAdminLoggedIn", "true");
 

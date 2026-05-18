@@ -29,15 +29,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAdminLogin = document.getElementById("btnAdminLogin");
 
     if (isAdmin) {
-        if (btnLogout) btnLogout.style.display = 'inline-flex';
-        if (btnAdminLogin) btnAdminLogin.style.display = 'none';
+        if (btnLogout) btnLogout.classList.remove('d-none');
+        if (btnAdminLogin) btnAdminLogin.classList.add('d-none');
+    } else if (isUser) {
+        if (btnLogout) btnLogout.classList.remove('d-none');
+        if (btnAdminLogin) btnAdminLogin.classList.remove('d-none');
     } else {
-        if (btnLogout) btnLogout.style.display = 'none';
-        if (btnAdminLogin) btnAdminLogin.style.display = 'inline-flex';
+        if (btnLogout) btnLogout.classList.add('d-none');
+        if (btnAdminLogin) btnAdminLogin.classList.remove('d-none');
     }
 
     if (btnLogout) {
-        btnLogout.addEventListener("click", () => {
+        btnLogout.addEventListener("click", (e) => {
+            e.preventDefault();
             sessionStorage.removeItem("isAdminLoggedIn");
             sessionStorage.removeItem("isUserLoggedIn");
             window.location.href = "login.html";
