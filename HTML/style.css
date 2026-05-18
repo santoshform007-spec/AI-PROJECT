@@ -652,14 +652,14 @@ body {
 }
 
 .developer-credit {
-    margin-top: 2rem;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    text-align: right;
-    letter-spacing: 0.8px;
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    font-weight: 650;
+    text-align: center;
     display: block;
-    text-transform: uppercase;
+    transition: var(--transition);
+    letter-spacing: 0.2px;
 }
 
 .btn-admin-login {
