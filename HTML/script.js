@@ -38,6 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (btnLogout) btnLogout.classList.add('d-none');
         if (btnAdminLogin) btnAdminLogin.classList.remove('d-none');
     }
+    // Show Generate PDF button for admin
+    const btnGeneratePdf = document.getElementById('btnGeneratePdf');
+    if (isAdmin && btnGeneratePdf) {
+        btnGeneratePdf.classList.remove('d-none');
+        btnGeneratePdf.addEventListener('click', generatePdfReport);
+    }
 
     if (btnLogout) {
         btnLogout.addEventListener("click", (e) => {
@@ -340,3 +346,47 @@ function renderReport(data) {
 
     reportContainer.innerHTML = output;
 }
+function generatePdfReport() {
+    // Ensure data is loaded
+    const ensureData = () => {
+        if (allDutyRecords.length) return Promise.resolve();
+        return fetch(SCRIPT_URL).then(r => r.json()).then(data => { allDutyRecords = data || []; });
+    };
+    ensureData().then(() => {
+        if (!allDutyRecords || allDutyRecords.length === 0) {
+            showToast('No records to generate report', 'error');
+            return;
+        }
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        doc.text('Police Station Wise Report', 105, 20, { align: 'center' });
+        let y = 30;
+        const grouped = {};
+        allDutyRecords.forEach(rec => {
+            const station = rec[3] || 'Unknown';
+            if (!grouped[station]) grouped[station] = [];
+            grouped[station].push(rec);
+        });
+        Object.entries(grouped).forEach(([station, records]) => {
+            if (y > 270) { doc.addPage(); y = 20; }
+            doc.setFontSize(14);
+            doc.text(`Station: ${station}`, 14, y);
+            y += 8;
+            doc.setFontSize(12);
+            records.forEach((rec, idx) => {
+                const line = `${idx + 1}. Name: ${rec[0]}, PNO: ${rec[1]}, Mobile: ${rec[2]}`;
+                if (y > 280) { doc.addPage(); y = 20; }
+                doc.text(line, 20, y);
+                y += 6;
+            });
+            y += 4;
+        });
+        doc.save('Police_Station_Wise_Report.pdf');
+        showToast('PDF report generated', 'success');
+    }).catch(err => {
+        console.error(err);
+        showToast('Failed to generate PDF', 'error');
+    });
+}
+
