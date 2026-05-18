@@ -375,15 +375,13 @@ function generatePdfReport() {
         }
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFontSize(16);
-        doc.text('Police Station Wise Report', 105, 20, { align: 'center' });
-        let y = 30;
         const grouped = {};
         allDutyRecords.forEach(rec => {
             const station = rec[4] || 'Unknown';
             if (!grouped[station]) grouped[station] = [];
             grouped[station].push(rec);
         });
+
         // Get the order of police stations from the dropdown select element
         const postingSelect = document.getElementById('posting');
         const orderedStations = postingSelect 
@@ -399,12 +397,25 @@ function generatePdfReport() {
             return rankA - rankB;
         });
 
+        let isFirstPage = true;
+
         sortedStations.forEach(station => {
             const records = grouped[station];
-            if (y > 260) { doc.addPage(); y = 20; }
-            doc.setFontSize(14);
-            doc.text(`Police Station: ${station}`, 14, y);
-            y += 8;
+            
+            if (!isFirstPage) {
+                doc.addPage();
+            }
+            isFirstPage = false;
+
+            // Render Title on each page for professional branding
+            doc.setFontSize(16);
+            doc.text('Police Station Wise Report', 105, 15, { align: 'center' });
+
+            // Render Subheader for the specific Police Station
+            doc.setFontSize(13);
+            doc.text(`Police Station: ${station}`, 14, 25);
+            
+            let y = 30;
 
             // Sort records in PDF station wise by Designation Order
             records.sort((a, b) => getDesignationRank(a[0]) - getDesignationRank(b[0]));
@@ -421,8 +432,6 @@ function generatePdfReport() {
                 styles: { fontSize: 10 },
                 headStyles: { fillColor: [41, 128, 185] }
             });
-            // Update y position after table
-            y = doc.lastAutoTable.finalY + 10;
         });
         doc.save('Police_Station_Wise_Report.pdf');
         showToast('PDF report generated', 'success');
