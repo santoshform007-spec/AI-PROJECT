@@ -244,15 +244,11 @@ body {
 }
 
 /* ==========================================================================
-   Symmetrical Viewport Controls (Fixed Circular & Pill buttons)
+   Header Toggle and Action Controls
    ========================================================================== */
 
-/* Fixed Hamburger Button at Top-Left */
+/* Hamburger Button at Top-Left */
 .btn-menu {
-    position: fixed;
-    top: 18px;
-    left: 20px;
-    z-index: 2100;
     background: #ffffff;
     border: 1px solid #ced4da;
     border-radius: 4px;
@@ -268,13 +264,6 @@ body {
     outline: none;
 }
 
-@media (min-width: 992px) {
-    .btn-menu {
-        position: absolute;
-        left: 295px; /* Sits next to sidebar on desktop top-bar */
-    }
-}
-
 .btn-menu:hover {
     background-color: var(--secondary-hover);
     color: var(--primary-color);
@@ -285,20 +274,19 @@ body {
     transform: scale(0.95);
 }
 
-/* Symmetrical Floating Logout Button at Top-Right */
+/* Logout Button */
 .btn-logout {
-    position: fixed;
-    top: 18px;
-    right: 20px;
-    z-index: 2100;
     background: #ffffff !important;
     border: 1px solid #ced4da !important;
     border-radius: 4px !important;
-    padding: 0.4rem 1rem !important;
-    font-size: 0.8rem !important;
+    padding: 0.45rem 1.25rem !important;
+    font-size: 0.85rem !important;
     color: #495057 !important;
     font-weight: 600 !important;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: var(--transition);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
@@ -307,6 +295,10 @@ body {
     background-color: #fee2e2 !important;
     border-color: #fca5a5 !important;
     color: var(--danger-color) !important;
+}
+
+.btn-logout:active {
+    transform: scale(0.95);
 }
 
 /* ==========================================================================
