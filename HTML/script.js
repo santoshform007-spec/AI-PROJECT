@@ -88,6 +88,95 @@ document.addEventListener("DOMContentLoaded", () => {
             submitEditForm();
         });
     }
+
+    // Right Sidebar Toggle Logic
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const btnSidebarToggle = document.getElementById("btnSidebarToggle");
+    const closeSidebarBtn = document.getElementById("closeSidebar");
+
+    const openSidebar = () => {
+        sidebar.classList.add("open");
+        sidebarOverlay.classList.add("show");
+    };
+
+    const closeSidebar = () => {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("show");
+    };
+
+    if (btnSidebarToggle) btnSidebarToggle.addEventListener("click", openSidebar);
+    if (closeSidebarBtn) closeSidebarBtn.addEventListener("click", closeSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+
+    // Sidebar Action Listeners
+    const menuStatsBtn = document.getElementById("menuStatsBtn");
+    const menuFormBtn = document.getElementById("menuFormBtn");
+    const menuReportBtn = document.getElementById("menuReportBtn");
+    const menuPdfBtn = document.getElementById("menuPdfBtn");
+    const menuLogoutBtn = document.getElementById("menuLogoutBtn");
+
+    if (menuStatsBtn) {
+        menuStatsBtn.addEventListener("click", () => {
+            closeSidebar();
+            const dashboardStats = document.getElementById("dashboard-stats");
+            if (dashboardStats) dashboardStats.scrollIntoView({ behavior: "smooth" });
+        });
+    }
+
+    if (menuFormBtn) {
+        menuFormBtn.addEventListener("click", () => {
+            closeSidebar();
+            const myForm = document.getElementById("myForm");
+            if (myForm) myForm.scrollIntoView({ behavior: "smooth" });
+        });
+    }
+
+    if (menuReportBtn) {
+        menuReportBtn.addEventListener("click", () => {
+            closeSidebar();
+            const reportSection = document.getElementById("report-section");
+            if (reportSection) {
+                if (reportSection.classList.contains("hidden")) {
+                    displayReport();
+                }
+                reportSection.scrollIntoView({ behavior: "smooth" });
+            }
+        });
+    }
+
+    if (menuPdfBtn) {
+        menuPdfBtn.addEventListener("click", () => {
+            closeSidebar();
+            generatePdfReport();
+        });
+    }
+
+    if (menuLogoutBtn) {
+        menuLogoutBtn.addEventListener("click", () => {
+            closeSidebar();
+            sessionStorage.removeItem("isAdminLoggedIn");
+            sessionStorage.removeItem("isUserLoggedIn");
+            window.location.href = "login.html";
+        });
+    }
+
+    // Role-based layout triggers
+    const dashboardStats = document.getElementById("dashboard-stats");
+    if (isAdmin) {
+        if (dashboardStats) dashboardStats.classList.remove("d-none");
+        if (menuStatsBtn) menuStatsBtn.classList.remove("d-none");
+        if (menuPdfBtn) menuPdfBtn.classList.remove("d-none");
+        
+        // Load initial stats immediately for admin
+        fetch(SCRIPT_URL)
+            .then(r => r.json())
+            .then(data => {
+                allDutyRecords = data || [];
+                updateDashboardStats(allDutyRecords);
+            })
+            .catch(err => console.error("Error fetching initial stats:", err));
+    }
 });
 
 function showToast(message, type = 'success') {
@@ -162,8 +251,17 @@ function submitForm() {
                     if (!reportSection.classList.contains("hidden")) {
                         displayReport();
                     } else {
-                        // Keep allDutyRecords in sync for future duplicate checks
-                        allDutyRecords = [];
+                        if (isAdmin) {
+                            fetch(SCRIPT_URL)
+                                .then(r => r.json())
+                                .then(d => {
+                                    allDutyRecords = d || [];
+                                    updateDashboardStats(allDutyRecords);
+                                })
+                                .catch(err => console.error("Error updating stats:", err));
+                        } else {
+                            allDutyRecords = [];
+                        }
                     }
                 })
                 .catch(error => {
@@ -216,6 +314,16 @@ window.deleteRecord = function (pno) {
                 const reportSection = document.getElementById("report-section");
                 if (!reportSection.classList.contains("hidden")) {
                     displayReport();
+                } else {
+                    if (isAdmin) {
+                        fetch(SCRIPT_URL)
+                            .then(r => r.json())
+                            .then(d => {
+                                allDutyRecords = d || [];
+                                updateDashboardStats(allDutyRecords);
+                            })
+                            .catch(err => console.error("Error updating stats:", err));
+                    }
                 }
             })
             .catch(error => {
@@ -259,7 +367,17 @@ function submitEditForm() {
             if (!reportSection.classList.contains("hidden")) {
                 displayReport();
             } else {
-                allDutyRecords = []; // Reset cache so next submit re-fetches
+                if (isAdmin) {
+                    fetch(SCRIPT_URL)
+                        .then(r => r.json())
+                        .then(d => {
+                            allDutyRecords = d || [];
+                            updateDashboardStats(allDutyRecords);
+                        })
+                        .catch(err => console.error("Error updating stats:", err));
+                } else {
+                    allDutyRecords = []; // Reset cache so next submit re-fetches
+                }
             }
         })
         .catch(error => {
@@ -290,6 +408,7 @@ function displayReport() {
         .then(data => {
             allDutyRecords = data || [];
             renderReport(allDutyRecords);
+            updateDashboardStats(allDutyRecords);
         })
         .catch(error => {
             reportContainer.innerHTML = `
@@ -430,5 +549,24 @@ function generatePdfReport() {
         console.error(err);
         showToast('Failed to generate PDF', 'error');
     });
+}
+
+function updateDashboardStats(data) {
+    if (!isAdmin) return;
+    
+    // Total Personnel
+    const totalPersonnel = data.length;
+    const statTotalPersonnel = document.getElementById("statTotalPersonnel");
+    if (statTotalPersonnel) statTotalPersonnel.textContent = totalPersonnel;
+    
+    // Active Stations
+    const uniqueStations = new Set();
+    data.forEach(record => {
+        if (record[4]) {
+            uniqueStations.add(record[4].trim());
+        }
+    });
+    const statActiveStations = document.getElementById("statActiveStations");
+    if (statActiveStations) statActiveStations.textContent = uniqueStations.size;
 }
 
