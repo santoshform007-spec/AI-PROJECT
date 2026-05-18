@@ -39,6 +39,20 @@
         <main class="card">
             <form id="myForm">
                 <div class="form-group">
+                    <label for="designation">Designation</label>
+                    <div class="select-wrapper">
+                        <select id="designation" name="designation" required>
+                            <option value="" disabled selected>Select Designation</option>
+                            <option value="Com Op">Com Op</option>
+                            <option value="HC">HC</option>
+                            <option value="LHC">LHC</option>
+                            <option value="C">C</option>
+                            <option value="LC">LC</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" placeholder="Enter full name" required>
                 </div>
@@ -140,6 +154,20 @@
             </header>
             <form id="editForm">
                 <input type="hidden" id="editOriginalPno" name="originalPno">
+
+                <div class="form-group">
+                    <label for="editDesignation">Designation</label>
+                    <div class="select-wrapper">
+                        <select id="editDesignation" name="designation" required>
+                            <option value="" disabled>Select Designation</option>
+                            <option value="Com Op">Com Op</option>
+                            <option value="HC">HC</option>
+                            <option value="LHC">LHC</option>
+                            <option value="C">C</option>
+                            <option value="LC">LC</option>
+                        </select>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <label for="editName">Name</label>

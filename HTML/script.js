@@ -112,7 +112,7 @@ function showToast(message, type = 'success') {
 // optionally excluding a specific PNO (used during updates).
 function isPnoDuplicate(pno, excludePno = null) {
     return allDutyRecords.some(record => {
-        const recordPno = String(record[1]).trim();
+        const recordPno = String(record[2]).trim();
         if (excludePno !== null && recordPno === String(excludePno).trim()) {
             return false; // skip the original record being edited
         }
@@ -184,8 +184,9 @@ function submitForm() {
 }
 
 // Global functions for inline HTML event handlers
-window.editRecord = function (name, pno, mobile, posting) {
+window.editRecord = function (designation, name, pno, mobile, posting) {
     document.getElementById('editOriginalPno').value = pno;
+    document.getElementById('editDesignation').value = designation;
     document.getElementById('editName').value = name;
     document.getElementById('editPno').value = pno;
     document.getElementById('editMobile').value = mobile;
@@ -307,7 +308,7 @@ function renderReport(data) {
 
     let filteredData = data;
     if (filterValue !== "All") {
-        filteredData = data.filter(record => record[3] === filterValue);
+        filteredData = data.filter(record => record[4] === filterValue);
     }
 
     let output = "";
@@ -322,11 +323,11 @@ function renderReport(data) {
                         <span>Record ${index + 1}</span>
                         <div class="report-card-actions">
                             ${isAdmin ? `
-                            <button class="action-btn edit-btn" title="Edit" onclick="editRecord('${record[0]}', '${record[1]}', '${record[2]}', '${record[3]}')">
+                            <button class="action-btn edit-btn" title="Edit" onclick="editRecord('${record[0]}', '${record[1]}', '${record[2]}', '${record[3]}', '${record[4]}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 Edit
                             </button>
-                            <button class="action-btn delete-btn" title="Delete" onclick="deleteRecord('${record[1]}')">
+                            <button class="action-btn delete-btn" title="Delete" onclick="deleteRecord('${record[2]}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                 Delete
                             </button>
@@ -334,10 +335,11 @@ function renderReport(data) {
                         </div>
                     </div>
                     <div class="report-card-body">
-                        <p><strong>Name</strong>: ${record[0]}</p>
-                        <p><strong>PNO</strong>: ${record[1]}</p>
-                        <p><strong>Mobile No</strong>: ${record[2]}</p>
-                        <p><strong>Posting</strong>: ${record[3]}</p>
+                        <p><strong>Designation</strong>: ${record[0]}</p>
+                        <p><strong>Name</strong>: ${record[1]}</p>
+                        <p><strong>PNO</strong>: ${record[2]}</p>
+                        <p><strong>Mobile No</strong>: ${record[3]}</p>
+                        <p><strong>Posting</strong>: ${record[4]}</p>
                     </div>
                 </div>
             `;
@@ -364,7 +366,7 @@ function generatePdfReport() {
         let y = 30;
         const grouped = {};
         allDutyRecords.forEach(rec => {
-            const station = rec[3] || 'Unknown';
+            const station = rec[4] || 'Unknown';
             if (!grouped[station]) grouped[station] = [];
             grouped[station].push(rec);
         });
@@ -374,11 +376,11 @@ function generatePdfReport() {
             doc.text(`Station: ${station}`, 14, y);
             y += 8;
             // Prepare table body
-            const body = records.map(r => [r[0], r[1], r[2]]);
+            const body = records.map(r => [r[0], r[1], r[2], r[3]]);
             // Add autoTable
             doc.autoTable({
                 startY: y,
-                head: [['Name', 'PNO', 'Mobile']],
+                head: [['Designation', 'Name', 'PNO', 'Mobile']],
                 body: body,
                 theme: 'grid',
                 margin: { left: 14, right: 14 },
