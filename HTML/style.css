@@ -1,18 +1,23 @@
 :root {
-    --primary-color: #0b4c96; /* Dark corporate blue */
+    --primary-color: #0b4c96;
+    /* Dark corporate blue */
     --primary-hover: #083b75;
     --primary-light: rgba(11, 76, 150, 0.08);
     --secondary-color: #f8fafc;
     --secondary-hover: #f1f5f9;
-    --info-color: #1b73e8; /* Vibrant Google/CEIR active blue */
+    --info-color: #1b73e8;
+    /* Vibrant Google/CEIR active blue */
     --info-hover: #155cb0;
-    --success-color: #28a745; /* Clean green matching screenshot */
+    --success-color: #28a745;
+    /* Clean green matching screenshot */
     --success-hover: #218838;
     --danger-color: #ef4444;
     --danger-hover: #dc2626;
-    --text-main: #212529; /* Dark gray for high contrast */
+    --text-main: #212529;
+    /* Dark gray for high contrast */
     --text-muted: #6c757d;
-    --bg-color: #f5f6f9; /* Soft background */
+    --bg-color: #f5f6f9;
+    /* Soft background */
     --card-bg: #ffffff;
     --border-color: #ced4da;
     --border-radius: 6px;
@@ -49,7 +54,8 @@ body {
 /* Desktop layout adjustment when sidebar is visible */
 @media (min-width: 992px) {
     .app-layout {
-        padding-left: 280px; /* Space for the persistent left sidebar */
+        padding-left: 280px;
+        /* Space for the persistent left sidebar */
     }
 }
 
@@ -60,7 +66,8 @@ body {
 .sidebar {
     position: fixed;
     top: 0;
-    left: -280px; /* Hidden by default on mobile/tablet */
+    left: -280px;
+    /* Hidden by default on mobile/tablet */
     width: 280px;
     height: 100%;
     background-color: var(--primary-color);
@@ -73,12 +80,14 @@ body {
 
 @media (min-width: 992px) {
     .sidebar {
-        left: 0; /* Permanently open on desktop */
+        left: 0;
+        /* Permanently open on desktop */
     }
 }
 
 .sidebar.open {
-    left: 0; /* Slides open on mobile */
+    left: 0;
+    /* Slides open on mobile */
 }
 
 /* Sidebar Logo & Branding */
@@ -155,7 +164,8 @@ body {
 }
 
 .sidebar-item.active {
-    background-color: var(--info-color); /* Light vibrant blue active key */
+    background-color: var(--info-color);
+    /* Light vibrant blue active key */
     color: #ffffff;
     font-weight: 700;
 }
@@ -213,12 +223,14 @@ body {
     font-size: 0.85rem;
     color: var(--text-muted);
     font-weight: 500;
-    margin-left: 3.5rem; /* Leaves space for the fixed left button */
+    margin-left: 3.5rem;
+    /* Leaves space for the fixed left button */
 }
 
 @media (min-width: 992px) {
     .breadcrumbs {
-        margin-left: 0; /* Pulls back to start when left button floats off */
+        margin-left: 0;
+        /* Pulls back to start when left button floats off */
     }
 }
 
@@ -386,7 +398,8 @@ body {
    ========================================================================== */
 
 .ceir-card {
-    background-color: #ebf5fe; /* Light baby blue card background matching screenshot */
+    background-color: #ebf5fe;
+    /* Light baby blue card background matching screenshot */
     border: 1px solid #bbdefb;
     border-radius: 12px;
     padding: 3rem 2.5rem;
@@ -403,7 +416,8 @@ body {
 .ceir-card-header h2 {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #0b4c96; /* Dark corporate blue title color */
+    color: #0b4c96;
+    /* Dark corporate blue title color */
     letter-spacing: -0.5px;
 }
 
@@ -429,7 +443,8 @@ body {
 }
 
 .ceir-label {
-    flex: 0 0 30%; /* 30% Width on left side */
+    flex: 0 0 30%;
+    /* 30% Width on left side */
     font-weight: 600;
     font-size: 0.9rem;
     color: #495057;
@@ -437,7 +452,8 @@ body {
 }
 
 .ceir-value {
-    flex: 0 0 70%; /* 70% Width on right side */
+    flex: 0 0 70%;
+    /* 70% Width on right side */
     width: 100%;
 }
 
@@ -456,7 +472,8 @@ body {
     font-size: 0.9rem;
     font-family: 'Inter', sans-serif;
     border: 1px solid var(--border-color);
-    border-radius: 4px; /* Crisp square-ish corners matching reference */
+    border-radius: 4px;
+    /* Crisp square-ish corners matching reference */
     background-color: #ffffff;
     color: var(--text-main);
     transition: var(--transition);
@@ -502,7 +519,8 @@ body {
 }
 
 .btn-ceir-submit {
-    background-color: var(--success-color); /* Green background matching Submit button */
+    background-color: var(--success-color);
+    /* Green background matching Submit button */
     color: #ffffff;
     border: none;
     border-radius: 4px;
@@ -849,8 +867,13 @@ body {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Error message styles */
@@ -907,7 +930,7 @@ body {
 
 .developer-credit {
     margin-top: 1.5rem;
-    font-size: 0.7rem;
+    font-size: 0.5rem;
     color: var(--text-muted);
     font-weight: 600;
     text-align: right;
@@ -920,18 +943,39 @@ body {
    ========================================================================== */
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes zoomIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @keyframes slideInRight {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* Utility Utilities */
@@ -945,9 +989,9 @@ body {
 
 .login-body {
     background: radial-gradient(at 0% 0%, #e0f2fe 0px, transparent 50%),
-                radial-gradient(at 100% 0%, #f0f9ff 0px, transparent 50%),
-                radial-gradient(at 50% 100%, #e0e7ff 0px, transparent 50%),
-                #ffffff;
+        radial-gradient(at 100% 0%, #f0f9ff 0px, transparent 50%),
+        radial-gradient(at 50% 100%, #e0e7ff 0px, transparent 50%),
+        #ffffff;
     color: #1e293b;
     display: flex;
     align-items: center;
@@ -992,7 +1036,8 @@ body {
     box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08) !important;
     width: 100%;
     border-radius: 16px !important;
-    padding: 3rem 2rem 2.5rem 2rem !important; /* Added more top padding for emblem overlay */
+    padding: 3rem 2rem 2.5rem 2rem !important;
+    /* Added more top padding for emblem overlay */
     margin-bottom: 0 !important;
     position: relative;
 }
@@ -1007,7 +1052,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: -5.5rem auto 1.5rem auto; /* Overlaps card top beautifully! */
+    margin: -5.5rem auto 1.5rem auto;
+    /* Overlaps card top beautifully! */
     box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
     color: #1b73e8;
     backdrop-filter: blur(10px);
@@ -1016,13 +1062,22 @@ body {
 }
 
 @keyframes pulseGlowLight {
-    0% { box-shadow: 0 0 0 0 rgba(27, 115, 232, 0.2), 0 10px 20px rgba(15, 23, 42, 0.05); }
-    70% { box-shadow: 0 0 0 15px rgba(27, 115, 232, 0), 0 10px 20px rgba(15, 23, 42, 0.05); }
-    100% { box-shadow: 0 0 0 0 rgba(27, 115, 232, 0), 0 10px 20px rgba(15, 23, 42, 0.05); }
+    0% {
+        box-shadow: 0 0 0 0 rgba(27, 115, 232, 0.2), 0 10px 20px rgba(15, 23, 42, 0.05);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(27, 115, 232, 0), 0 10px 20px rgba(15, 23, 42, 0.05);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(27, 115, 232, 0), 0 10px 20px rgba(15, 23, 42, 0.05);
+    }
 }
 
 .login-card .form-group label {
-    color: #475569 !important; /* Soft gray for light background label */
+    color: #475569 !important;
+    /* Soft gray for light background label */
     font-size: 0.8rem;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -1047,9 +1102,11 @@ body {
 .login-card .form-group input {
     background: #ffffff !important;
     border: 1px solid #cbd5e1 !important;
-    color: #0f172a !important; /* Clean dark text for user typing */
+    color: #0f172a !important;
+    /* Clean dark text for user typing */
     border-radius: 6px !important;
-    padding: 0.8rem 1rem 0.8rem 2.75rem !important; /* Left padding added for icon room! */
+    padding: 0.8rem 1rem 0.8rem 2.75rem !important;
+    /* Left padding added for icon room! */
     font-size: 0.95rem !important;
     transition: var(--transition);
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02) !important;
@@ -1067,7 +1124,7 @@ body {
 }
 
 /* Glow SVG icon when input is active */
-.login-card .form-group input:focus + .input-icon {
+.login-card .form-group input:focus+.input-icon {
     color: var(--info-color) !important;
 }
 
