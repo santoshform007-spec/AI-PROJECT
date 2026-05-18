@@ -384,7 +384,23 @@ function generatePdfReport() {
             if (!grouped[station]) grouped[station] = [];
             grouped[station].push(rec);
         });
-        Object.entries(grouped).forEach(([station, records]) => {
+        // Get the order of police stations from the dropdown select element
+        const postingSelect = document.getElementById('posting');
+        const orderedStations = postingSelect 
+            ? Array.from(postingSelect.options).map(o => o.value).filter(val => val !== "") 
+            : [];
+
+        // Sort the stations keys by their position in the dropdown list
+        const sortedStations = Object.keys(grouped).sort((a, b) => {
+            const idxA = orderedStations.indexOf(a);
+            const idxB = orderedStations.indexOf(b);
+            const rankA = idxA === -1 ? 999 : idxA;
+            const rankB = idxB === -1 ? 999 : idxB;
+            return rankA - rankB;
+        });
+
+        sortedStations.forEach(station => {
+            const records = grouped[station];
             if (y > 260) { doc.addPage(); y = 20; }
             doc.setFontSize(14);
             doc.text(`Police Station: ${station}`, 14, y);
