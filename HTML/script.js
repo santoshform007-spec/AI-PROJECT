@@ -105,7 +105,16 @@ document.addEventListener("DOMContentLoaded", () => {
         sidebarOverlay.classList.remove("show");
     };
 
-    if (btnSidebarToggle) btnSidebarToggle.addEventListener("click", openSidebar);
+    const toggleSidebar = () => {
+        const isOpen = sidebar.classList.contains("open");
+        if (isOpen) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    };
+
+    if (btnSidebarToggle) btnSidebarToggle.addEventListener("click", toggleSidebar);
     if (closeSidebarBtn) closeSidebarBtn.addEventListener("click", closeSidebar);
     if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
 
