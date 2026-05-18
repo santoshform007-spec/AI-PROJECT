@@ -933,7 +933,7 @@ body {
     font-size: 0.5rem;
     color: var(--text-muted);
     font-weight: 600;
-    text-align: left;
+    text-align: right;
     display: block;
     letter-spacing: 0.5px;
 }
@@ -1197,4 +1197,7 @@ body {
     color: #0b4c96 !important;
     letter-spacing: 0.5px;
     margin-top: 0.5rem;
+    align-self: flex-end !important;
+    text-align: right !important;
+    width: 100%;
 }
