@@ -933,7 +933,7 @@ body {
     font-size: 0.5rem;
     color: var(--text-muted);
     font-weight: 600;
-    text-align: right;
+    text-align: left;
     display: block;
     letter-spacing: 0.5px;
 }
