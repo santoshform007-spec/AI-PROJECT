@@ -43,39 +43,68 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
+// Returns true if the given PNO already exists in allDutyRecords.
+function isPnoDuplicate(pno) {
+    return allDutyRecords.some(record => String(record[1]).trim() === String(pno).trim());
+}
+
 function submitForm() {
     const form = document.getElementById("myForm");
-    const formData = new FormData(form);
-
+    const pno = document.getElementById("pno").value.trim();
     const btnSubmit = document.getElementById("btnSubmit");
-
-    // Disable button during submission
     const originalSubmitText = btnSubmit.innerHTML;
 
     btnSubmit.disabled = true;
-    btnSubmit.innerHTML = "Submitting...";
+    btnSubmit.innerHTML = "Checking...";
 
-    fetch(SCRIPT_URL, {
-        method: "POST",
-        body: formData
-    })
-        .then(response => response.text())
-        .then(data => {
-            showToast("Data Submitted Successfully", "success");
-            form.reset();
+    // If records haven't been loaded yet, fetch them first for duplicate checking
+    const checkDuplicate = allDutyRecords.length > 0
+        ? Promise.resolve()
+        : fetch(SCRIPT_URL)
+            .then(r => r.json())
+            .then(data => { allDutyRecords = data || []; });
 
-            // Refresh report if it's visible
-            const reportSection = document.getElementById("report-section");
-            if (!reportSection.classList.contains("hidden")) {
-                displayReport();
+    checkDuplicate
+        .then(() => {
+            if (isPnoDuplicate(pno)) {
+                showToast(`PNO ${pno} already exists. Duplicate entry not allowed.`, "error");
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = originalSubmitText;
+                return;
             }
+
+            const formData = new FormData(form);
+            btnSubmit.innerHTML = "Submitting...";
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    showToast("Data Submitted Successfully", "success");
+                    form.reset();
+                    // Invalidate cache so future submissions re-validate
+                    allDutyRecords = [];
+
+                    // Refresh report if it's visible
+                    const reportSection = document.getElementById("report-section");
+                    if (!reportSection.classList.contains("hidden")) {
+                        displayReport();
+                    }
+                })
+                .catch(error => {
+                    showToast("Submission Failed", "error");
+                    console.error("Error:", error);
+                })
+                .finally(() => {
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = originalSubmitText;
+                });
         })
         .catch(error => {
-            showToast("Submission Failed", "error");
+            showToast("Could not verify PNO. Please try again.", "error");
             console.error("Error:", error);
-        })
-        .finally(() => {
-            // Re-enable button
             btnSubmit.disabled = false;
             btnSubmit.innerHTML = originalSubmitText;
         });
