@@ -919,3 +919,35 @@ body {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Floating Fixed Logout Button (Top-Right) */
+.btn-logout {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1800;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid var(--border-color) !important;
+    color: var(--danger-color) !important;
+    border-radius: 50px !important;
+    padding: 0.6rem 1.4rem !important;
+    font-weight: 700 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.btn-logout:hover {
+    background: rgba(239, 68, 68, 0.08) !important;
+    border-color: var(--danger-color) !important;
+    color: var(--danger-color) !important;
+    transform: translateY(-1px) scale(1.02);
+}
+
+.btn-logout:active {
+    transform: translateY(0) scale(0.98);
+}
