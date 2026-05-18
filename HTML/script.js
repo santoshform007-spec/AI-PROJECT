@@ -119,19 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
 
     // Sidebar Action Listeners
-    const menuStatsBtn = document.getElementById("menuStatsBtn");
     const menuFormBtn = document.getElementById("menuFormBtn");
     const menuReportBtn = document.getElementById("menuReportBtn");
     const menuPdfBtn = document.getElementById("menuPdfBtn");
     const menuLogoutBtn = document.getElementById("menuLogoutBtn");
-
-    if (menuStatsBtn) {
-        menuStatsBtn.addEventListener("click", () => {
-            closeSidebar();
-            const dashboardStats = document.getElementById("dashboard-stats");
-            if (dashboardStats) dashboardStats.scrollIntoView({ behavior: "smooth" });
-        });
-    }
 
     if (menuFormBtn) {
         menuFormBtn.addEventListener("click", () => {
@@ -174,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const dashboardStats = document.getElementById("dashboard-stats");
     if (isAdmin) {
         if (dashboardStats) dashboardStats.classList.remove("d-none");
-        if (menuStatsBtn) menuStatsBtn.classList.remove("d-none");
         if (menuPdfBtn) menuPdfBtn.classList.remove("d-none");
         
         // Load initial stats immediately for admin
