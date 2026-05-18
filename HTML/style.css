@@ -994,6 +994,31 @@ body {
     border-radius: 16px !important;
     padding: 2.5rem 2rem !important;
     margin-bottom: 0 !important;
+    position: relative;
+}
+
+/* Pulsing Shield Lock Badge */
+.login-badge {
+    width: 68px;
+    height: 68px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -4.5rem auto 1.5rem auto; /* Overlaps card top beautifully! */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    color: #93c5fd;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(27, 115, 232, 0.4), 0 10px 25px rgba(0, 0, 0, 0.2); }
+    70% { box-shadow: 0 0 0 15px rgba(27, 115, 232, 0), 0 10px 25px rgba(0, 0, 0, 0.2); }
+    100% { box-shadow: 0 0 0 0 rgba(27, 115, 232, 0), 0 10px 25px rgba(0, 0, 0, 0.2); }
 }
 
 .login-card .form-group label {
@@ -1003,15 +1028,32 @@ body {
     text-transform: uppercase;
 }
 
+/* Input Icon Wrapper Logic */
+.input-icon-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon-wrapper .input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #475569;
+    pointer-events: none;
+    transition: var(--transition);
+}
+
 .login-card .form-group input {
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     color: #ffffff !important;
     border-radius: 6px !important;
-    padding: 0.8rem 1rem !important;
+    padding: 0.8rem 1rem 0.8rem 2.75rem !important; /* Left padding added for icon room! */
     font-size: 0.95rem !important;
     transition: var(--transition);
     box-shadow: none !important;
+    width: 100%;
 }
 
 .login-card .form-group input::placeholder {
@@ -1022,6 +1064,11 @@ body {
     background: rgba(255, 255, 255, 0.08) !important;
     border-color: var(--info-color) !important;
     box-shadow: 0 0 0 3px rgba(27, 115, 232, 0.25) !important;
+}
+
+/* Glow SVG icon when input is active */
+.login-card .form-group input:focus + .input-icon {
+    color: var(--info-color) !important;
 }
 
 .btn-login {
@@ -1056,27 +1103,41 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
+/* User redirection button styled as a frosted glass pill button */
 .user-link {
     color: #93c5fd !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50px !important;
+    padding: 0.5rem 1.5rem !important;
     text-decoration: none;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.8rem !important;
     transition: var(--transition);
     display: inline-flex;
     align-items: center;
+    gap: 0.35rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .user-link:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
     color: #ffffff !important;
-    transform: translateX(3px);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.user-link:active {
+    transform: translateY(0);
 }
 
 .login-links .developer-credit {
     font-size: 0.65rem !important;
     color: #64748b !important;
     letter-spacing: 0.5px;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
 }
